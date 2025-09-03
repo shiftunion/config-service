@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+*.eggs/
+dist/
+build/
+*.manifest
+*.spec
+*.log
+*.pot
+*.mo
+*.cache
+*.coverage
+.coverage.*
+.cache/
+.pytest_cache/
+.tox/
+.nox/
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+Pipfile.lock
+poetry.lock
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Misc
+*.sqlite3
+*.db
+*.sqlite
+*.log
+*.pot
+*.mo
+*.bak
+*.swp
+*.swo
+*.tmp
+*.orig
+
+# API docs
+openapi.yaml
+swagger.yaml
+
+# Test output
+htmlcov/
+coverage.xml
+nosetests.xml
+test-results/
+
+# Local config
+config.yaml
+config.local.yaml
+secrets.yaml
+
+# Ignore by pattern
+!src/**/*.py
