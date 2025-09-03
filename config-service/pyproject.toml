@@ -1,0 +1,21 @@
+[project]
+name = "config-service"
+version = "0.1.0"
+description = "Config API Service (FastAPI + psycopg2, raw SQL)"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "fastapi==0.116.1",
+  "pydantic==2.11.7",
+  "pydantic-settings==2.6.1",
+  "httpx==0.28.1",
+  "psycopg2==2.9.10",
+  "pydantic-extra-types==2.9.0",
+  "uvicorn==0.30.6",
+  "pytest==8.4.1"
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+python_files = ["*_test.py"]
+testpaths = ["."]
