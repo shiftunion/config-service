@@ -1,0 +1,23 @@
+- Prompt: Read @/prompts/1-web-api-specs.md and follow the instructions at the top of the file.
+- Tool: ChatGPT
+- Mode: Plan
+- Context: Clean
+- Model: Codex GPT-5
+- Input: prompts/1-web-api-specs.md
+- Output : prompts/2-web-api-prompt.md
+- Cost: N/A
+- Reflections (narrative assessments of the response): [enter after the run completes]
+
+- Prompt: Read @/prompts/2-web-api-prompt.md and follow the instructions at the top of the file.
+- Mode: Plan
+- Context: Clean
+- Input: prompts/2-web-api-specs.md
+- Output: prompts/3-web-api-plan.md
+
+- Prompt:  Please create a Config API Service in the `config-service` folder, according to the Implementation Plan defined in @/prompts/3-create-web-api-plan.md
+- Tool: Copilot
+- Mode: Agent
+- Context: N/A
+- Model: GPT-5
+- Input: prompts/3-web-api-plan.md
+- Output: config-service/
