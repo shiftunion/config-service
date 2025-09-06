@@ -1,7 +1,7 @@
 
 ### Prompt:
 
-`Please create a Config API Service in the config-service folder, according to the Implementation Plan defined in @/prompts/3-create-web-api-plan.md`
+`Please create a Config API Service in the config-service folder, according to the Implementation Plan defined in @/prompts/3-web-api-plan.md`
 
 ### Output from first past GPT-5
 I’m scaffolding the FastAPI Config API service per the provided plan and pinning all versions; next I’ll share what I created and how to run it.
