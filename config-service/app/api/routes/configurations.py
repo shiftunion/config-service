@@ -3,7 +3,6 @@ from __future__ import annotations
 """Configurations API routes."""
 
 from fastapi import APIRouter, Depends
-from pydantic_extra_types.ulid import ULID
 
 from app.api.deps import get_pool
 from app.models.types import ConfigurationCreate, ConfigurationOut, ConfigurationUpdate
@@ -25,12 +24,12 @@ def create_configuration(data: ConfigurationCreate, svc: ConfigurationsService =
 
 
 @router.put("/{id}", response_model=ConfigurationOut)
-def update_configuration(id: ULID, data: ConfigurationUpdate, svc: ConfigurationsService = Depends(service)):
+def update_configuration(id: str, data: ConfigurationUpdate, svc: ConfigurationsService = Depends(service)):
     """Update a configuration by id."""
     return svc.update(str(id), data)
 
 
 @router.get("/{id}", response_model=ConfigurationOut)
-def get_configuration(id: ULID, svc: ConfigurationsService = Depends(service)):
+def get_configuration(id: str, svc: ConfigurationsService = Depends(service)):
     """Fetch a configuration by id."""
     return svc.get(str(id))

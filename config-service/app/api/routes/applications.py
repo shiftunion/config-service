@@ -3,7 +3,6 @@ from __future__ import annotations
 """Applications API routes."""
 
 from fastapi import APIRouter, Depends
-from pydantic_extra_types.ulid import ULID
 
 from app.api.deps import get_pool
 from app.models.types import ApplicationCreate, ApplicationOut, ApplicationUpdate
@@ -25,13 +24,13 @@ def create_application(data: ApplicationCreate, svc: ApplicationsService = Depen
 
 
 @router.put("/{id}", response_model=ApplicationOut)
-def update_application(id: ULID, data: ApplicationUpdate, svc: ApplicationsService = Depends(service)):
+def update_application(id: str, data: ApplicationUpdate, svc: ApplicationsService = Depends(service)):
     """Update an application by id."""
     return svc.update(str(id), data)
 
 
 @router.get("/{id}", response_model=ApplicationOut)
-def get_application(id: ULID, svc: ApplicationsService = Depends(service)):
+def get_application(id: str, svc: ApplicationsService = Depends(service)):
     """Fetch an application by id."""
     return svc.get(str(id))
 

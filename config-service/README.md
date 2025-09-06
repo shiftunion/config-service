@@ -28,12 +28,17 @@ Set via `.env` (see `app/core/config.py` for defaults):
 
 ## Setup
 1. Copy `.env.example` to `.env` and adjust DB settings.
-2. Create the database (name from `DB_NAME`).
+2. Start the database with Docker (no API container):
+
+```sh
+make db-up      # builds image and starts Postgres
+```
+
 3. Install deps, apply migrations, and run the app:
 
 ```sh
 uv sync
-make migrate
+make migrate    # runs against the Dockerized DB
 make dev
 ```
 
@@ -64,6 +69,15 @@ python -m config-service.migrations verify
 ```
 
 `verify` returns non-zero when drift is detected.
+
+## Docker helpers (DB only)
+- `make db-build`: build the Postgres image that includes SQL migrations
+- `make db-up`: start the DB and wait for health
+- `make db-logs`: tail database logs
+- `make db-down`: stop the DB (keeps volume)
+- `make db-reset`: stop and remove volume (fresh init on next start)
+
+Only the database is containerized. The API runs directly via `uvicorn`.
 
 ## Testing
 ```sh
