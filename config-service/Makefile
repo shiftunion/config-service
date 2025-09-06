@@ -1,5 +1,8 @@
 UV=uv
 
+# Load .env for targets that need raw env (migrations). The app itself reads
+# .env via pydantic-settings, so run/dev don't require this.
+
 .PHONY: run dev test migrate status fmt
 
 run:
@@ -12,7 +15,7 @@ test:
 	$(UV) run pytest
 
 migrate:
-	$(UV) run python migrations.py up
+	bash -lc 'set -a; [ -f .env ] && source .env; set +a; $(UV) run python migrations.py up'
 
 status:
-	$(UV) run python migrations.py status
+	bash -lc 'set -a; [ -f .env ] && source .env; set +a; $(UV) run python migrations.py status'
