@@ -1,16 +1,35 @@
 # Config Service
 
-Small FastAPI service managing applications and configurations with raw SQL (psycopg2) and a minimal migration runner.
+FastAPI service to manage applications and their configurations. Persistence uses raw SQL via `psycopg2` with a lightweight SQL migration runner.
 
 ## Requirements
 - Python 3.13
 - PostgreSQL 16
 - uv (https://github.com/astral-sh/uv)
 
+## Project Structure
+- `app/`:
+  - `main.py`: FastAPI app factory and wiring
+  - `api/routes/`: HTTP route handlers (FastAPI routers)
+  - `core/`: runtime settings and utilities
+  - `db/`: connection pool and SQL helpers
+  - `models/`: pydantic request/response models
+  - `repositories/`: database persistence (raw SQL)
+  - `services/`: business logic and error translation
+- `migrations.py`: simple migration CLI (status/up/verify)
+- `migrations/*.sql`: ordered SQL migration files
+
+## Configuration (env)
+Set via `.env` (see `app/core/config.py` for defaults):
+- `APP_ENV`: environment name (`dev`, etc.)
+- `LOG_LEVEL`: log level (e.g., `INFO`, `DEBUG`)
+- `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`
+- `DB_POOL_MIN`, `DB_POOL_MAX`: psycopg2 threaded pool sizes
+
 ## Setup
 1. Copy `.env.example` to `.env` and adjust DB settings.
-2. Create the database in Postgres (DB_NAME from .env).
-3. Apply migrations and run:
+2. Create the database (name from `DB_NAME`).
+3. Install deps, apply migrations, and run the app:
 
 ```sh
 uv sync
@@ -18,21 +37,37 @@ make migrate
 make dev
 ```
 
-Service runs at http://localhost:8000, docs at /docs.
+- App served at `http://localhost:8000`
+- OpenAPI docs available at `/docs` and `/redoc`
 
-## Endpoints (base /api/v1)
-- POST /applications
-- PUT /applications/{id}
-- GET /applications/{id}
-- GET /applications
+## Endpoints (base `/api/v1`)
+Applications
+- `POST   /applications`
+- `PUT    /applications/{id}`
+- `GET    /applications/{id}`
+- `GET    /applications`
 
-- POST /configurations
-- PUT /configurations/{id}
-- GET /configurations/{id}
+Configurations
+- `POST   /configurations`
+- `PUT    /configurations/{id}`
+- `GET    /configurations/{id}`
+
+See `app/models/types.py` for request/response schemas.
+
+## Migrations
+Run status, apply pending, or verify checksums:
+
+```sh
+python -m config-service.migrations status
+python -m config-service.migrations up
+python -m config-service.migrations verify
+```
+
+`verify` returns non-zero when drift is detected.
 
 ## Testing
 ```sh
 make test
 ```
 
-All dependencies are strictly pinned in `pyproject.toml` per the plan.
+Dependencies are strictly pinned in `pyproject.toml`.

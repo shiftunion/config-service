@@ -1,5 +1,13 @@
 from __future__ import annotations
 
+"""Minimal SQL migrations runner for PostgreSQL.
+
+Supports three commands:
+- `status`: list known migration files and which are applied
+- `up`: apply all pending `.sql` files in lexical order
+- `verify`: detect checksum drift for already-applied files
+"""
+
 import argparse
 import hashlib
 import os
@@ -15,6 +23,7 @@ MIGRATIONS_DIR = Path(__file__).parent / "migrations"
 
 
 def env(key: str, default: str | None = None) -> str:
+    """Read an env var or exit if missing and no default is provided."""
     val = os.getenv(key, default)
     if val is None:
         raise SystemExit(f"Missing required env var: {key}")
@@ -22,6 +31,7 @@ def env(key: str, default: str | None = None) -> str:
 
 
 def db_conn_str() -> str:
+    """Build a psycopg2 DSN from required environment variables."""
     return (
         f"host={env('DB_HOST')} port={env('DB_PORT', '5432')} dbname={env('DB_NAME')} "
         f"user={env('DB_USER')} password={env('DB_PASSWORD')}"
@@ -29,6 +39,7 @@ def db_conn_str() -> str:
 
 
 def ensure_bootstrap(conn) -> None:
+    """Create the `migrations` bookkeeping table if it does not exist."""
     with conn.cursor() as cur:
         cur.execute(
             """
@@ -44,6 +55,7 @@ def ensure_bootstrap(conn) -> None:
 
 
 def file_checksum(path: Path) -> str:
+    """Return SHA-256 checksum for a migration file."""
     data = path.read_bytes()
     return hashlib.sha256(data).hexdigest()
 
@@ -56,6 +68,7 @@ class Migration:
 
 
 def get_status(conn) -> list[Migration]:
+    """Return migration rows combining on-disk files with applied records."""
     ensure_bootstrap(conn)
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute("SELECT filename, checksum FROM migrations ORDER BY filename")
@@ -70,6 +83,7 @@ def get_status(conn) -> list[Migration]:
 
 
 def apply_up(conn) -> None:
+    """Apply all pending migration files in lexical order as a series of txns."""
     ensure_bootstrap(conn)
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
         cur.execute("SELECT filename, checksum FROM migrations")
@@ -108,6 +122,7 @@ def verify(conn) -> list[tuple[str, str, str]]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """CLI entrypoint; parse args and run the requested command."""
     parser = argparse.ArgumentParser(description="Migrations runner")
     sub = parser.add_subparsers(dest="cmd", required=True)
     sub.add_parser("status")

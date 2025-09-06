@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Application entrypoint and FastAPI setup."""
+
 import logging
 from fastapi import FastAPI
 
@@ -8,6 +10,7 @@ from app.api.routes.configurations import router as configurations_router
 
 
 def create_app() -> FastAPI:
+    """Create and configure the FastAPI application instance."""
     app = FastAPI(title="Config Service", version="0.1.0")
 
     app.include_router(applications_router, prefix="/api/v1")

@@ -1,15 +1,21 @@
 from __future__ import annotations
 
+"""Raw SQL repository for `configurations` table."""
+
 from typing import Optional
 
 from app.db.pool import DBPool
 
 
 class ConfigurationsRepo:
+    """Encapsulates CRUD operations for configurations."""
+
     def __init__(self, db: DBPool):
+        """Store the connection pool wrapper for later queries."""
         self.db = db
 
     def create(self, id: str, application_id: str, name: str, comments: Optional[str], config: dict) -> dict:
+        """Insert a new configuration row and return it."""
         with self.db.cursor() as (conn, cur):
             cur.execute(
                 """
@@ -24,6 +30,7 @@ class ConfigurationsRepo:
             return dict(row)
 
     def update(self, id: str, name: Optional[str], comments: Optional[str], config: Optional[dict]) -> Optional[dict]:
+        """Patch fields on a configuration and return the updated row if found."""
         sets = []
         vals = []
         if name is not None:
@@ -46,6 +53,7 @@ class ConfigurationsRepo:
             return dict(row) if row else None
 
     def get(self, id: str) -> Optional[dict]:
+        """Return a configuration by id, or `None` if missing."""
         with self.db.cursor() as (conn, cur):
             cur.execute(
                 "SELECT id, application_id, name, comments, config FROM configurations WHERE id = %s",
