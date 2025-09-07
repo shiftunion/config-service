@@ -5,7 +5,6 @@ from __future__ import annotations
 from typing import Any, Dict
 
 from pydantic import BaseModel, Field
-from pydantic_extra_types.ulid import ULID
 
 
 class AppBase(BaseModel):
@@ -18,7 +17,7 @@ class AppBase(BaseModel):
 class ApplicationCreate(AppBase):
     """Payload for creating an application."""
 
-    id: ULID
+    id: str
 
 
 class ApplicationUpdate(BaseModel):
@@ -31,7 +30,7 @@ class ApplicationUpdate(BaseModel):
 class ApplicationOut(AppBase):
     """Application response model with related configuration ids."""
 
-    id: ULID
+    id: str
     configuration_ids: list[str] = Field(default_factory=list)
 
 
@@ -46,8 +45,8 @@ class ConfigBase(BaseModel):
 class ConfigurationCreate(ConfigBase):
     """Payload for creating a configuration for an application."""
 
-    id: ULID
-    application_id: ULID
+    id: str
+    application_id: str
 
 
 class ConfigurationUpdate(BaseModel):
@@ -61,5 +60,5 @@ class ConfigurationUpdate(BaseModel):
 class ConfigurationOut(ConfigBase):
     """Configuration response model."""
 
-    id: ULID
-    application_id: ULID
+    id: str
+    application_id: str
