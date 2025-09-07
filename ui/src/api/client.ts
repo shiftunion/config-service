@@ -8,7 +8,9 @@ async function request<T>(input: RequestInfo, init?: RequestInit & { timeoutMs?:
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), init?.timeoutMs ?? 15000);
   try {
-    const res = await fetch(input, { ...init, signal: controller.signal, headers: { ...JSON_HEADERS, ...(init?.headers || {}) } });
+    const hasBody = !!(init && 'body' in init && (init as RequestInit).body != null);
+    const headers = { ...(init?.headers || {}), ...(hasBody ? JSON_HEADERS : {}) } as Record<string, string>;
+    const res = await fetch(input, { ...init, signal: controller.signal, headers });
     const text = await res.text();
     const data = text ? JSON.parse(text) : undefined;
     if (!res.ok) {

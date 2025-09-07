@@ -25,6 +25,7 @@ Set via `.env` (see `app/core/config.py` for defaults):
 - `LOG_LEVEL`: log level (e.g., `INFO`, `DEBUG`)
 - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`
 - `DB_POOL_MIN`, `DB_POOL_MAX`: psycopg2 threaded pool sizes
+ - `CORS_ORIGINS`: comma-separated list of allowed origins for CORS (e.g., `http://localhost:5173` or `https://admin.example.com,https://admin.staging.example.com`). Use `*` to allow any origin (credentials disabled).
 
 ## Setup
 1. Copy `.env.example` to `.env` and adjust DB settings.
@@ -44,6 +45,10 @@ make dev
 
 - App served at `http://localhost:8000`
 - OpenAPI docs available at `/docs` and `/redoc`
+
+### CORS notes
+- For local UI dev on Vite (`http://localhost:5173`), set `CORS_ORIGINS=http://localhost:5173` or use the UI dev proxy so calls are same-origin.
+- With `CORS_ORIGINS=*`, cookies/credentials are not allowed per CORS spec.
 
 ## Endpoints (base `/api/v1`)
 Applications
