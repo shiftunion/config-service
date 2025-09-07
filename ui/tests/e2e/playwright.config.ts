@@ -2,7 +2,7 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   webServer: {
-    command: 'pnpm preview',
+    command: 'pnpm build && pnpm preview',
     port: 5173,
     reuseExistingServer: true,
     timeout: 120000
@@ -12,4 +12,3 @@ export default defineConfig({
     trace: 'on-first-retry'
   }
 });
-

@@ -52,3 +52,6 @@
     - Performance Targets – load time, bundle size, lazy-loading.
     - Documentation – admin user guide, dev technical docs, known limitations.
     - Extensibility – pattern for adding new entity types, reusable components.
+
+
+    Continually updating my ignore file
