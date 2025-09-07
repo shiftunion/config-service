@@ -78,3 +78,33 @@ secrets.yaml
 
 # Ignore by pattern
 !src/**/*.py
+
+# --- Frontend / UI (Web, TypeScript, Vite/Web Components) ---
+node_modules/
+pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+*.d.ts.map
+*.js.map
+.vite/
+.cache-loader/
+.eslintcache
+.stylelintcache
+coverage/        # frontend coverage (python htmlcov/ already above)
+.vitest/
+.playwright/
+playwright-report/
+test-results/    # already listed; keep for clarity
+.parcel-cache/
+.turbo/
+ui/dist/
+ui/build/
+ui/.output/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Keep lockfiles (do NOT ignore): pnpm-lock.yaml, package-lock.json, yarn.lock

@@ -1,0 +1,40 @@
+/* DevExpress-inspired density and clarity */
+:root {
+  --card-padding: 16px;
+  --table-row-height: 44px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+}
+.btn.primary { background: var(--primary); border-color: transparent; }
+.btn.ghost { background: transparent; }
+.btn:disabled { opacity: 0.6; cursor: default; }
+
+.field { display: grid; gap: 6px; }
+.field label { color: var(--text-muted); font-size: 12px; }
+.error { color: var(--danger); font-size: 12px; }
+
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+
