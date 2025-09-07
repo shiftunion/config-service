@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Optional
 
 from app.db.pool import DBPool
+from psycopg2.extras import Json
 
 
 class ConfigurationsRepo:
@@ -23,7 +24,7 @@ class ConfigurationsRepo:
                 VALUES (%s, %s, %s, %s, %s)
                 RETURNING id, application_id, name, comments, config
                 """,
-                (id, application_id, name, comments, config),
+                (id, application_id, name, comments, Json(config)),
             )
             row = cur.fetchone()
             conn.commit()
@@ -41,7 +42,7 @@ class ConfigurationsRepo:
             vals.append(comments)
         if config is not None:
             sets.append("config = %s")
-            vals.append(config)
+            vals.append(Json(config))
         if not sets:
             return self.get(id)
         vals.append(id)

@@ -20,4 +20,4 @@ dependencies = [
 [tool.pytest.ini_options]
 addopts = "-q"
 python_files = ["*_test.py"]
-testpaths = ["."]
+testpaths = [".", "tests"]

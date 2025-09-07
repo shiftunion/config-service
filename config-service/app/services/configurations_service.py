@@ -7,7 +7,7 @@ responses and returns typed response models.
 """
 
 from fastapi import HTTPException, status
-from psycopg2 import errors
+from psycopg2 import errorcodes
 
 from app.db.pool import DBPool
 from app.models.types import ConfigurationCreate, ConfigurationOut, ConfigurationUpdate
@@ -27,9 +27,9 @@ class ConfigurationsService:
             row = self.repo.create(str(data.id), str(data.application_id), data.name, data.comments, data.config)
         except Exception as e:
             code = getattr(e, "pgcode", None)
-            if code == errors.UniqueViolation.sqlstate:
+            if code == errorcodes.UNIQUE_VIOLATION:
                 raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Configuration name must be unique per application")
-            if code == errors.ForeignKeyViolation.sqlstate:
+            if code == errorcodes.FOREIGN_KEY_VIOLATION:
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="application_id does not exist")
             raise
         return ConfigurationOut(**row)
@@ -40,7 +40,7 @@ class ConfigurationsService:
             row = self.repo.update(id, data.name, data.comments, data.config)
         except Exception as e:
             code = getattr(e, "pgcode", None)
-            if code == errors.UniqueViolation.sqlstate:
+            if code == errorcodes.UNIQUE_VIOLATION:
                 raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Configuration name must be unique per application")
             raise
         if not row:

@@ -9,7 +9,7 @@ API-facing response models.
 from typing import Optional
 
 from fastapi import HTTPException, status
-from psycopg2 import errors
+from psycopg2 import errorcodes
 
 from app.db.pool import DBPool
 from app.models.types import ApplicationCreate, ApplicationOut, ApplicationUpdate
@@ -28,7 +28,7 @@ class ApplicationsService:
         try:
             row = self.repo.create(str(data.id), data.name, data.comments)
         except Exception as e:  # map unique violation to 409
-            if getattr(e, "pgcode", None) == errors.UniqueViolation.sqlstate:
+            if getattr(e, "pgcode", None) == errorcodes.UNIQUE_VIOLATION:
                 raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Application name must be unique")
             raise
         conf_ids = self.repo.get_configuration_ids(row["id"])  # empty
@@ -39,7 +39,7 @@ class ApplicationsService:
         try:
             row = self.repo.update(id, data.name, data.comments)
         except Exception as e:
-            if getattr(e, "pgcode", None) == errors.UniqueViolation.sqlstate:
+            if getattr(e, "pgcode", None) == errorcodes.UNIQUE_VIOLATION:
                 raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Application name must be unique")
             raise
         if not row:

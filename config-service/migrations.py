@@ -31,11 +31,17 @@ def env(key: str, default: str | None = None) -> str:
 
 
 def db_conn_str() -> str:
-    """Build a psycopg2 DSN from required environment variables."""
-    return (
-        f"host={env('DB_HOST')} port={env('DB_PORT', '5432')} dbname={env('DB_NAME')} "
-        f"user={env('DB_USER')} password={env('DB_PASSWORD')}"
-    )
+    """Build a psycopg2 DSN using env vars with sensible defaults.
+
+    Defaults mirror local dev/docker-compose values so tests can run
+    without exporting env variables explicitly.
+    """
+    host = env("DB_HOST", "localhost")
+    port = env("DB_PORT", "5432")
+    db = env("DB_NAME", "configsvc-alpha")
+    user = env("DB_USER", "postgres")
+    pwd = env("DB_PASSWORD", "postgres")
+    return f"host={host} port={port} dbname={db} user={user} password={pwd}"
 
 
 def ensure_bootstrap(conn) -> None:

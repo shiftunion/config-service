@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class AppBase(BaseModel):
@@ -18,6 +18,11 @@ class ApplicationCreate(AppBase):
     """Payload for creating an application."""
 
     id: str
+
+    @field_validator("id", mode="before")
+    @classmethod
+    def coerce_id(cls, v):
+        return str(v)
 
 
 class ApplicationUpdate(BaseModel):
@@ -47,6 +52,11 @@ class ConfigurationCreate(ConfigBase):
 
     id: str
     application_id: str
+
+    @field_validator("id", "application_id", mode="before")
+    @classmethod
+    def coerce_ulid(cls, v):
+        return str(v)
 
 
 class ConfigurationUpdate(BaseModel):
