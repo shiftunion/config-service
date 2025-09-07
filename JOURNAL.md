@@ -55,3 +55,6 @@
 
 
     Continually updating my ignore file
+    - did not have a configurable end point base.. 
+    - add a VITE_API_BASE env (e.g., https://api.example.com) and have the client prefix requests with it.
+    - env.example
