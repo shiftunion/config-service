@@ -5,7 +5,7 @@ function json(data: any) {
 }
 
 async function mockAll(page: Page) {
-  let apps = [ { id: 'alpha', name: 'Alpha', updatedAt: '2024-01-01T00:00:00Z' } ];
+  let apps = [ { id: 'alpha', name: 'Alpha', comments: '', updatedAt: '2024-01-01T00:00:00Z' } ];
   let cfgs: any[] = [ { id: 'cfg1', application_id: 'alpha', name: 'Default', comments: '', config: { a: 1 }, updatedAt: '2024-01-01T00:00:00Z' } ];
 
   await page.route('**/api/v1/applications', async (route: Route, req: Request) => {
@@ -15,7 +15,7 @@ async function mockAll(page: Page) {
   });
   await page.route('**/api/v1/applications/*', async (route: Route, req: Request) => {
     const id = req.url().split('/').pop()!;
-    if (req.method() === 'GET') return route.fulfill(json(apps.find(a => a.id === id) || { id, name: '' }));
+    if (req.method() === 'GET') return route.fulfill(json(apps.find(a => a.id === id) || { id, name: '', comments: '' }));
     if (req.method() === 'PUT') { const patch = JSON.parse(req.postData() || '{}'); const i = apps.findIndex(a => a.id === id); if (i>=0) apps[i] = { ...apps[i], ...patch }; return route.fulfill(json(apps[i])); }
     return route.fallback();
   });

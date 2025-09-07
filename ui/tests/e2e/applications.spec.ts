@@ -6,8 +6,8 @@ function json(data: any) {
 
 async function mockApplications(page: Page, opts?: { onCreate?: (payload: any) => any; onUpdate?: (id: string, payload: any) => any; failNextCreate?: boolean; failNextUpdate?: boolean; }) {
   let apps = [
-    { id: 'beta', name: 'Beta', updatedAt: '2024-01-02T00:00:00Z' },
-    { id: 'alpha', name: 'Alpha', updatedAt: '2024-01-01T00:00:00Z' }
+    { id: 'beta', name: 'Beta', comments: 'Beta comment', updatedAt: '2024-01-02T00:00:00Z' },
+    { id: 'alpha', name: 'Alpha', comments: 'Alpha comment', updatedAt: '2024-01-01T00:00:00Z' }
   ];
 
   await page.route('**/api/v1/applications', async (route: Route, req: Request) => {
@@ -25,7 +25,7 @@ async function mockApplications(page: Page, opts?: { onCreate?: (payload: any) =
   await page.route('**/api/v1/applications/*', async (route: Route, req: Request) => {
     const id = req.url().split('/').pop()!;
     if (req.method() === 'GET') {
-      const found = apps.find(a => a.id === id) || { id, name: '', updatedAt: '' };
+      const found = apps.find(a => a.id === id) || { id, name: '', comments: '', updatedAt: '' };
       return route.fulfill(json(found));
     }
     if (req.method() === 'PUT') {
@@ -48,6 +48,7 @@ test.describe('Applications flows', () => {
   test('list and navigate to edit by row click', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByText('Applications')).toBeVisible();
+    await expect(page.getByText('Beta comment')).toBeVisible();
     await page.getByText('Alpha').click();
     await expect(page).toHaveURL(/#\/applications\/alpha$/);
     await expect(page.getByText('Save')).toBeVisible();
