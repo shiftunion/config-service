@@ -58,3 +58,6 @@
     - did not have a configurable end point base.. 
     - add a VITE_API_BASE env (e.g., https://api.example.com) and have the client prefix requests with it.
     - env.example
+    - Playright test did not build
+    - Comments field was missing - agent request via Codex fixed easily
+    -- seems to make up Playwrite test cases for behaviour it thinks should be there
