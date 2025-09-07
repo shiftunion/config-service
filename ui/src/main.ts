@@ -31,6 +31,7 @@ function mountApplicationsList() {
   (table as any).columns = [
     { key: 'id', header: 'ID' },
     { key: 'name', header: 'Name' },
+    { key: 'comments', header: 'Comments' },
     { key: 'updatedAt', header: 'Updated' }
   ];
   card.appendChild(table);
