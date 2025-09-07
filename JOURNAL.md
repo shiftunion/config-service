@@ -32,3 +32,8 @@
 - Model: Grok Fast Code
 - Input: prompts/3-web-api-plan.md
 - Output: config-service/ & prompts/3b-out-grok-fast-code.md
+
+
+
+- generated a ENDPOINTS_SUMMARY summary file
+- uv run python scripts/generate_endpoint_summary.py > ENDPOINTS_SUMMARY.md
