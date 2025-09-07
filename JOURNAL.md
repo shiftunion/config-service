@@ -33,7 +33,6 @@
 - Input: prompts/3-web-api-plan.md
 - Output: config-service/ & prompts/3b-out-grok-fast-code.md
 
-
 ### UI Generation - Plan creation with GPT-5
 - Prompt:  Please create a Config API Service in the `config-service` folder, according to the Implementation Plan defined in @/prompts/4-admin-ui-prompt.md
 - Tool: Codex
@@ -42,7 +41,7 @@
 - **Reflections:**
   - generated a ENDPOINTS_SUMMARY summary file
   - uv run python scripts/generate_endpoint_summary.py > ENDPOINTS_SUMMARY.md
-  - Cosiderations that couldbe added:
+  - Considerations that couldbe added:
     - Deployment & CI/CD – define hosting approach, build/test gates, artifact publishing.
     - Developer Experience – onboarding docs, contribution guidelines, component demo route.
     - Configuration Management – environment variables, per-env config handling.
@@ -53,11 +52,14 @@
     - Documentation – admin user guide, dev technical docs, known limitations.
     - Extensibility – pattern for adding new entity types, reusable components.
 
+### Agentic Improvements iterations - Codex Agent, GPT-5, Cline+Grok-fast-code
 
-    Continually updating my ignore file
-    - did not have a configurable end point base.. 
-    - add a VITE_API_BASE env (e.g., https://api.example.com) and have the client prefix requests with it.
-    - env.example
-    - Playright test did not build
-    - Comments field was missing - agent request via Codex fixed easily
-    -- seems to make up Playwrite test cases for behaviour it thinks should be there
+    - Continually needed to be updating my ignore file
+    - Did not have a configurable end point base. Added one
+      - add a VITE_API_BASE env (e.g., https://api.example.com) and have the client prefix requests with it.
+      - env.example
+    - Playwright test did not build - missing dependencies
+      - Playwrite tests did not run
+    - Comments field was missing from UI listig - agent request via Codex fixed easily
+    - Codex - seems to make up Playwright test cases for behaviour it thinks should be there
+      - Playwrite generated test actually highlighted some functional gaps in my app that I wasn't aware of, where toast messages were not working
