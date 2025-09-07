@@ -6,7 +6,7 @@
 ### Output from first past GPT-5
 I’m scaffolding the FastAPI Config API service per the provided plan and pinning all versions; next I’ll share what I created and how to run it.
 
-Requirements checklist
+# Requirements checklist
 - Tech stack and versions pinned (FastAPI, Pydantic, httpx, psycopg2, pytest, Python): Done
 - API endpoints under /api/v1 for applications and configurations: Done
 - Raw SQL (no ORM) using psycopg2 with pooling: Done
@@ -17,7 +17,7 @@ Requirements checklist
 - Makefile targets run/dev/test/migrate/status via uv: Done
 - Tests (smoke + migrations utility): Basic added; more coverage suggested below
 
-Actions taken
+# Actions taken
 - Created service skeleton in config-service with pinned dependencies and Makefile.
 - Implemented FastAPI app, routers, DTOs, services, repositories, and DB pool.
 - Added migrations/0001_init.sql matching the plan; added migrations.py CLI with status/up/verify and checksum drift checks.
@@ -25,7 +25,7 @@ Actions taken
 - Added minimal tests: OpenAPI smoke test and a checksum difference test.
 - Added .gitignore for the service and kept the root .gitignore.
 
-Files added (high-level)
+# Files added (high-level)
 - pyproject.toml — Pinned deps (FastAPI 0.116.1, Pydantic 2.11.7, httpx 0.28.1, psycopg2 2.9.10, pytest 8.4.1, pydantic-extra-types, uvicorn)
 - config-service/Makefile — run/dev/test/migrate/status via uv
 - .env.example — DB config, pool sizes, log level
