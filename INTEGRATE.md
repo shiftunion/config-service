@@ -1,15 +1,15 @@
 # Integrate learning with reflection
 
-## Code Repo
+### Code Repo
 https://github.com/shiftunion/config-service
-State: Builds, works OK, unit test pass, E2E a bit flakey
+State: Builds fine, works OK, unit test passing, E2E a bit flakey.
 
 ## 1. What surprised you?
 - I had way too much of fun here. 
-- I haven't coded frequently for over five years, and I don't know Python! This was liberating
+- I haven't coded frequently for over five years, and I don't know Python! This was liberating.
 - I felt years of frustration at my atrophying language skills, lift and dissipate, as we can focus on the core higher level concepts, which have always been more interesting to me.
     - Marvelled at how easy it was to drill down and use the agent to understand and modify code.
-- Shocked at just how far these tools have come, since I tried them 6 months ago
+- Shocked at just how far these tools have come, since I tried them 6 months ago.
 - Surprised at how easy it was to get something up and running, to iterate many times, and how the context could be switched between different coding assistance very easily (Codex, Chat-GPT, Cline, Co-pilot).
 
 ## 2. What frustrated you?
@@ -27,7 +27,7 @@ I feel like I facilitated them well in and agentic brainstorming workshop! No eg
 - I got stuck in some interesting data state/seed data and E2E testing challenges... I had to Jetpack out of that rabbit hole!
 
 ## 5. How did you find not hand-writing code?
-Very easy for me, I don’t know Python, and I don’t code with much frequency these days. So I was happy to let the agent do it, and explain it. I found this quite liberating, as it removed my perfectionist OCD tendencies,
+Very easy for me, I don’t know Python, and I don’t code with much frequency these days. So I was happy to let the agent do it, and explain it. I found this quite liberating, as it removed my perfectionist OCD tendencies.
 
 ## 6. How will this experience influence you going forward?
 I really got dialed into where the agents/models are right now. But I have so many questions that I need to explore:
